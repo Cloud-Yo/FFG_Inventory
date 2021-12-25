@@ -20,4 +20,9 @@ public class Item : MonoBehaviour
         _myImage.SetNativeSize();
     }
 
+    public void SetNewPosition(Vector2 pos)
+    {
+        transform.localPosition = pos;
+    }
+
 }

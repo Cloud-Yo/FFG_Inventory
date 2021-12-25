@@ -6,6 +6,7 @@ public class SelectorMovement : MonoBehaviour
 {
     [SerializeField] private const float _moveAmount = 19f;
     [SerializeField] private GridManager _inventoryGridManager;
+    [SerializeField] private SelectionManager _selectionManager;
     private RectTransform _myRT = null;
     public Vector2 SelectorPosition {get { return (Vector2)this.transform.localPosition;} }
     private Vector2 _gridLimits;
@@ -16,11 +17,12 @@ public class SelectorMovement : MonoBehaviour
         _myRT = GetComponent<RectTransform>();
         _gridLimits = new Vector2(_inventoryGridManager.Width * 0.5f, _inventoryGridManager.Height * 0.5f);
         _myRT.localPosition = new Vector2(-(_gridLimits.x), _gridLimits.y);
+        OnMovedSelector();
     }
 
     private void OnMovedSelector()
     {
-        //
+        _selectionManager.CursorPosition = _myRT.localPosition;
     }
 
     public void MoveLeftRight(float x)
@@ -35,6 +37,7 @@ public class SelectorMovement : MonoBehaviour
         {
             _myRT.transform.localPosition = new Vector2(-_gridLimits.x, _myRT.transform.localPosition.y);
         }
+        OnMovedSelector();
     }    
     
     public void MoveUpDown(float y)
@@ -49,6 +52,7 @@ public class SelectorMovement : MonoBehaviour
         {
             _myRT.transform.localPosition = new Vector2(_myRT.transform.localPosition.x,_gridLimits.y);
         }
+        OnMovedSelector();
     }
 
 }

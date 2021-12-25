@@ -8,55 +8,81 @@ using UnityEngine.Events;
 public class PlayerController : MonoBehaviour
 {
     
-    private UiInputActions _lootInput;
-    private UiInputActions _movementInput;
-    private InputAction _generateRandomLoot;
+    private UiInputActions _playerInput;
+
+    private InputAction _yButton;
     private InputAction _moveUpDown;
     private InputAction _moveLeftRight;
+    private InputAction _xButton;
+    private InputAction _BumperButtons;
+    
     public UnityEvent<float> OnMoveUpDown = new UnityEvent<float>();
     public UnityEvent<float> OnMoveleftRight = new UnityEvent<float>();
-    [SerializeField] private InventoryManager _inventoryManager = null;
+    public UnityEvent OnPressY = new UnityEvent();
+    public UnityEvent OnPressX = new UnityEvent();
+    public UnityEvent<int> OnPressBumper = new UnityEvent<int>();
 
     private void Awake()
     {
-        _lootInput = new UiInputActions();
-        _movementInput = new UiInputActions();
+        _playerInput = new UiInputActions();
 
     }
 
     private void OnEnable()
     {
-        _generateRandomLoot = _lootInput.Player.RegenerateRandomLoot;
-        _generateRandomLoot.Enable();
-        _lootInput.Player.RegenerateRandomLoot.performed += ResetLoot;
-        _lootInput.Player.RegenerateRandomLoot.Enable();
+        _yButton = _playerInput.Player.YButton;
+        _yButton.Enable();
+        _playerInput.Player.YButton.performed += OnYButtonPress;
+        _playerInput.Player.YButton.Enable();
 
-        _moveUpDown = _movementInput.Player.MoveUpDown;
+        _xButton = _playerInput.Player.XButton;
+        _xButton.Enable();
+        _playerInput.Player.XButton.performed += OnXButtonPress;
+        _playerInput.Player.XButton.Enable();
+
+        _moveUpDown = _playerInput.Player.MoveUpDown;
         _moveUpDown.Enable();
-        _movementInput.Player.MoveUpDown.performed += SelectorUpDown;
-        _movementInput.Player.MoveUpDown.Enable();        
+        _playerInput.Player.MoveUpDown.performed += SelectorUpDown;
+        _playerInput.Player.MoveUpDown.Enable();        
         
-        _moveLeftRight = _movementInput.Player.MoveLeftRight;
+        _moveLeftRight = _playerInput.Player.MoveLeftRight;
         _moveLeftRight.Enable();
-        _movementInput.Player.MoveLeftRight.performed += SelectorLeftRight;
-        _movementInput.Player.MoveLeftRight.Enable();
+        _playerInput.Player.MoveLeftRight.performed += SelectorLeftRight;
+        _playerInput.Player.MoveLeftRight.Enable();
+
+
+        _BumperButtons = _playerInput.Player.Bumpers;
+        _BumperButtons.Enable();
+        _playerInput.Player.Bumpers.performed += OnBumpersPressed;
+        _playerInput.Player.Bumpers.Enable();
     }
+
 
     private void OnDisable()
     {
-        _generateRandomLoot.Disable();
-        _lootInput.Player.RegenerateRandomLoot.Disable();
+        _yButton.Disable();
+        _playerInput.Player.YButton.Disable();
+
+        _xButton.Disable();
+        _playerInput.Player.XButton.Disable();
 
         _moveUpDown.Disable();
-        _movementInput.Player.MoveUpDown.performed -= SelectorUpDown;
+        _playerInput.Player.MoveUpDown.performed -= SelectorUpDown;
         
         _moveLeftRight.Disable();
-        _movementInput.Player.MoveLeftRight.performed -= SelectorLeftRight;
+        _playerInput.Player.MoveLeftRight.performed -= SelectorLeftRight;
+
+        _BumperButtons.Disable();
+        _playerInput.Player.Bumpers.performed -= OnBumpersPressed;
     }
 
-    private void ResetLoot(InputAction.CallbackContext obj)
+    private void OnXButtonPress(InputAction.CallbackContext obj)
     {
-        _inventoryManager.SpawnRandomItems();
+        OnPressX?.Invoke();
+    }
+    private void OnYButtonPress(InputAction.CallbackContext obj)
+    {
+        OnPressY?.Invoke();
     }
 
     private void SelectorLeftRight(InputAction.CallbackContext obj)
@@ -67,6 +93,12 @@ public class PlayerController : MonoBehaviour
     private void SelectorUpDown(InputAction.CallbackContext obj)
     {
         OnMoveUpDown?.Invoke(Mathf.Round(_moveUpDown.ReadValue<float>()));
+    }
+
+
+    private void OnBumpersPressed(InputAction.CallbackContext obj)
+    {
+        OnPressBumper?.Invoke((int)Mathf.Round(_BumperButtons.ReadValue<float>()));
     }
 
 }

@@ -10,7 +10,8 @@ public class InventoryManager : MonoBehaviour
     [Header("Items")]
     [SerializeField] private List<ItemSO> _inventoryItems = null;
     [SerializeField] private int _amountOfItems = 5;
-    private List<GameObject> _items = new List<GameObject>();
+    private List<Item> _items = new List<Item>();
+    public List<Item> Items { get { return _items; } }
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class InventoryManager : MonoBehaviour
         {
             foreach (var item in _items)
             {
-                Destroy(item);
+                Destroy(item.gameObject);
             }
             _items.Clear();
         }
@@ -37,19 +38,35 @@ public class InventoryManager : MonoBehaviour
             newItem.transform.localPosition = slots[i];
             Item item = newItem.AddComponent<Item>();
             item.ItemScriptableObject = randomItems[i];
-            _items.Add(newItem);
+            _items.Add(item);
         }
 
-        /*
-        for (int i = 0; i < _amountOfItems; i++)
+    }
+
+    public void SwapItemPosition(Item selected, Item current, Vector2 pos)
+    {
+        Vector2 NewPosition = new Vector2();
+        NewPosition = pos;
+        Vector2 OldPosition = new Vector2();
+        OldPosition = selected.ItemPosition;
+        int selectedIdx = _items.IndexOf(selected);
+        if (current != null)
         {
-            GameObject newItem = Instantiate(new GameObject(randomItems[i].ItemName));
-            newItem.transform.SetParent(this.transform, false);
-            newItem.transform.localPosition = slots[i];
-            Item item = newItem.AddComponent<Item>();
-            item.ItemScriptableObject = randomItems[i];
-            _items.Add(newItem);
+            NewPosition = current.ItemPosition;
+            int currentIdx = _items.IndexOf(current);
+            _items[currentIdx].SetNewPosition(OldPosition);
         }
-         */
+
+        _items[selectedIdx].SetNewPosition(NewPosition);
+    }
+
+    public void DeleteItem(Item item)
+    {
+        if(_items.Contains(item))
+        {
+            Debug.Log($"{item.Name} was deleted!");
+            Destroy(item.gameObject);
+            _items.Remove(item);
+        }
     }
 }

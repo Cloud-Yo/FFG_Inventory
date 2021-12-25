@@ -28,7 +28,7 @@ public partial class @UiInputActions : IInputActionCollection2, IDisposable
             ""id"": ""af548692-d8c7-4189-b590-54a502b04d59"",
             ""actions"": [
                 {
-                    ""name"": ""RegenerateRandomLoot"",
+                    ""name"": ""YButton"",
                     ""type"": ""Button"",
                     ""id"": ""0c2757db-b9f3-42c5-b986-35c1f408692d"",
                     ""expectedControlType"": ""Button"",
@@ -53,6 +53,24 @@ public partial class @UiInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""XButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""080816d4-6983-41fa-8818-17aba5d0c84e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Bumpers"",
+                    ""type"": ""Button"",
+                    ""id"": ""85d6e361-0f6d-4bc6-a399-ab746049ca37"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -63,7 +81,7 @@ public partial class @UiInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RegenerateRandomLoot"",
+                    ""action"": ""YButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -74,7 +92,7 @@ public partial class @UiInputActions : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RegenerateRandomLoot"",
+                    ""action"": ""YButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -231,6 +249,94 @@ public partial class @UiInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""MoveLeftRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f305d034-81cf-4533-bad2-14e96e8f90ef"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""38b51e14-c092-4008-916c-9228b8d48c0e"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""XButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""GamePadShoulder"",
+                    ""id"": ""e6df0334-9d51-4c83-8912-ff63675c3ff0"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bumpers"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""cfac3c17-7242-4bfd-9af9-f5e7b5b99632"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bumpers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""d6bf97f1-53aa-4fba-8dbe-bcfa248f0c1b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bumpers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""ArrowKeys"",
+                    ""id"": ""89793d41-b587-46ce-a7d2-81e8b2eb884a"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bumpers"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""698a68a0-48bf-4929-af8f-2d5d6cbe65a2"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bumpers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""00122811-5553-448a-b125-f0a2a76c3af8"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Bumpers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -239,9 +345,11 @@ public partial class @UiInputActions : IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_RegenerateRandomLoot = m_Player.FindAction("RegenerateRandomLoot", throwIfNotFound: true);
+        m_Player_YButton = m_Player.FindAction("YButton", throwIfNotFound: true);
         m_Player_MoveUpDown = m_Player.FindAction("MoveUpDown", throwIfNotFound: true);
         m_Player_MoveLeftRight = m_Player.FindAction("MoveLeftRight", throwIfNotFound: true);
+        m_Player_XButton = m_Player.FindAction("XButton", throwIfNotFound: true);
+        m_Player_Bumpers = m_Player.FindAction("Bumpers", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -301,16 +409,20 @@ public partial class @UiInputActions : IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
-    private readonly InputAction m_Player_RegenerateRandomLoot;
+    private readonly InputAction m_Player_YButton;
     private readonly InputAction m_Player_MoveUpDown;
     private readonly InputAction m_Player_MoveLeftRight;
+    private readonly InputAction m_Player_XButton;
+    private readonly InputAction m_Player_Bumpers;
     public struct PlayerActions
     {
         private @UiInputActions m_Wrapper;
         public PlayerActions(@UiInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @RegenerateRandomLoot => m_Wrapper.m_Player_RegenerateRandomLoot;
+        public InputAction @YButton => m_Wrapper.m_Player_YButton;
         public InputAction @MoveUpDown => m_Wrapper.m_Player_MoveUpDown;
         public InputAction @MoveLeftRight => m_Wrapper.m_Player_MoveLeftRight;
+        public InputAction @XButton => m_Wrapper.m_Player_XButton;
+        public InputAction @Bumpers => m_Wrapper.m_Player_Bumpers;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -320,36 +432,50 @@ public partial class @UiInputActions : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_PlayerActionsCallbackInterface != null)
             {
-                @RegenerateRandomLoot.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRegenerateRandomLoot;
-                @RegenerateRandomLoot.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRegenerateRandomLoot;
-                @RegenerateRandomLoot.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRegenerateRandomLoot;
+                @YButton.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnYButton;
+                @YButton.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnYButton;
+                @YButton.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnYButton;
                 @MoveUpDown.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveUpDown;
                 @MoveUpDown.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveUpDown;
                 @MoveUpDown.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveUpDown;
                 @MoveLeftRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveLeftRight;
                 @MoveLeftRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveLeftRight;
                 @MoveLeftRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMoveLeftRight;
+                @XButton.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnXButton;
+                @XButton.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnXButton;
+                @XButton.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnXButton;
+                @Bumpers.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBumpers;
+                @Bumpers.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBumpers;
+                @Bumpers.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnBumpers;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @RegenerateRandomLoot.started += instance.OnRegenerateRandomLoot;
-                @RegenerateRandomLoot.performed += instance.OnRegenerateRandomLoot;
-                @RegenerateRandomLoot.canceled += instance.OnRegenerateRandomLoot;
+                @YButton.started += instance.OnYButton;
+                @YButton.performed += instance.OnYButton;
+                @YButton.canceled += instance.OnYButton;
                 @MoveUpDown.started += instance.OnMoveUpDown;
                 @MoveUpDown.performed += instance.OnMoveUpDown;
                 @MoveUpDown.canceled += instance.OnMoveUpDown;
                 @MoveLeftRight.started += instance.OnMoveLeftRight;
                 @MoveLeftRight.performed += instance.OnMoveLeftRight;
                 @MoveLeftRight.canceled += instance.OnMoveLeftRight;
+                @XButton.started += instance.OnXButton;
+                @XButton.performed += instance.OnXButton;
+                @XButton.canceled += instance.OnXButton;
+                @Bumpers.started += instance.OnBumpers;
+                @Bumpers.performed += instance.OnBumpers;
+                @Bumpers.canceled += instance.OnBumpers;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
     public interface IPlayerActions
     {
-        void OnRegenerateRandomLoot(InputAction.CallbackContext context);
+        void OnYButton(InputAction.CallbackContext context);
         void OnMoveUpDown(InputAction.CallbackContext context);
         void OnMoveLeftRight(InputAction.CallbackContext context);
+        void OnXButton(InputAction.CallbackContext context);
+        void OnBumpers(InputAction.CallbackContext context);
     }
 }
