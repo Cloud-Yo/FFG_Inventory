@@ -40,7 +40,6 @@ public static class Utilities
     public static int CycleThroughCollection(int size, int currentIndex, int direction)
     {
         int index = 0;
-        Debug.Log($"index received {currentIndex}");
         switch(direction)
         {
             case 1:

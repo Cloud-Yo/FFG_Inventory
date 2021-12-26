@@ -64,7 +64,6 @@ public class InventoryManager : MonoBehaviour
     {
         if(_items.Contains(item))
         {
-            Debug.Log($"{item.Name} was deleted!");
             Destroy(item.gameObject);
             _items.Remove(item);
         }
