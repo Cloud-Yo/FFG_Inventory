@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3001ca9b079c2514783a3a12920d5d21, type: 3}
   m_Name: SteelAxe
   m_EditorClassIdentifier: 
-  _itemName: SteelAxe
+  _itemName: Steel Axe
   _icon: {fileID: 2184880335814091067, guid: 598ba31618f3a83468e678d4d7df7d4f, type: 3}
