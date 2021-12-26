@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3001ca9b079c2514783a3a12920d5d21, type: 3}
   m_Name: CreatureSlime
   m_EditorClassIdentifier: 
-  _itemName: Slime Monster
+  _itemName: Slime Cube
   _icon: {fileID: -1191684862145664731, guid: 598ba31618f3a83468e678d4d7df7d4f, type: 3}

@@ -14,14 +14,13 @@ public class ResolutionManager : MonoBehaviour
     {
         index = 0;
         _resolutions = new Vector2Int[]{_hDResolution, _fHDResolution, _UHDResolution};
-        Screen.SetResolution(_resolutions[index].x, _resolutions[index].y, FullScreenMode.FullScreenWindow);
+        Screen.SetResolution(_resolutions[index].x, _resolutions[index].y, FullScreenMode.Windowed);
     }
 
     public void SetNewResolution(int dir)
     {
         index = Utilities.CycleThroughCollection(_resolutions.Length, index, dir);
-        Screen.SetResolution(_resolutions[index].x, _resolutions[index].y, FullScreenMode.FullScreenWindow);
-        Debug.Log($"Current Resolution is {Screen.width}, {Screen.height}");
+        Screen.SetResolution(_resolutions[index].x, _resolutions[index].y, FullScreenMode.Windowed);
     }
 
     
