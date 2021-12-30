@@ -237,13 +237,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 321561199}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60034b58481589a4bbb5d97ab743038f, type: 3}
+  m_Script: {fileID: 11500000, guid: e755962d0db785841ab64e3f5b772631, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryManager: {fileID: 876738033}
-  _itemSelectedIcon: {fileID: 840348306}
+  _selectedItemImage: {fileID: 840348306}
   _cursorDeletePS: {fileID: 1141802976}
-  _uiManager: {fileID: 703266425}
 --- !u!82 &321561205
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1025,7 +1023,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 840348305}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3844510d0fa2e014fb2dfe0e2e46caed, type: 3}
+  m_Script: {fileID: 11500000, guid: 2f410574f646cf341a9f47a07ed441d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _blinkSpeed: 2
@@ -1115,7 +1113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e1cc1eceb2ba3f54dae2521deb5b8661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridManager: {fileID: 1509232638}
   _inventoryItems:
   - {fileID: 11400000, guid: abfec4eab39a7b044ac76724d60f1de4, type: 2}
   - {fileID: 11400000, guid: f1f641495629f7e45ac7293e6fcdaffd, type: 2}
@@ -1414,8 +1411,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b69347789413a04faeae2453be5f8ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryGridManager: {fileID: 1509232638}
-  _selectionManager: {fileID: 321561204}
+  _moveAmount: 19
 --- !u!199 &1141802975
 ParticleSystemRenderer:
   serializedVersion: 6

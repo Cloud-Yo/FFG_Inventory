@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
-public class Item : MonoBehaviour
+public class Item : MonoBehaviour, ISelectable
 {
+
     [SerializeField] private ItemSO _itemScriptableObject = null;
     public ItemSO ItemScriptableObject { get { return _itemScriptableObject; } set { _itemScriptableObject = value; } }
     private Image _myImage = null;
-    public string Name { get { return this.transform.name; } }
-    public Vector2 ItemPosition { get { return (Vector2)this.transform.localPosition; } }
+    public string Name { get { return _itemScriptableObject.ItemName; } }
     
+
     void Start()
     {
         _myImage = GetComponent<Image>();
@@ -24,5 +25,14 @@ public class Item : MonoBehaviour
     {
         transform.localPosition = pos;
     }
+
+    public void PingPosition(Vector2 position)
+    {
+        if (position == (Vector2)this.transform.localPosition)
+        {
+            SelectionManager.Instance.CurrentItem = this;
+        }
+    }
+
 
 }

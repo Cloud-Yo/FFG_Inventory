@@ -2,11 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoSingleton<InventoryManager>
 {
-    [Header("Components")]
-    [SerializeField] private GridManager _gridManager = null;
-
     [Header("Items")]
     [SerializeField] private List<ItemSO> _inventoryItems = null;
     [SerializeField] private int _amountOfItems = 5;
@@ -29,8 +26,8 @@ public class InventoryManager : MonoBehaviour
             _items.Clear();
         }
         List<ItemSO> randomItems = new List<ItemSO>((List<ItemSO>)Utilities.RandomItems(_inventoryItems, _amountOfItems, false));
-        List<Vector2> slots = new List<Vector2>((List<Vector2>)Utilities.RandomItems(_gridManager.Slots, _amountOfItems));
-       
+        List<Vector2> slots = new List<Vector2>((List<Vector2>)Utilities.RandomItems(GridManager.Instance.Slots, _amountOfItems));
+
         for (int i = 0; i < _amountOfItems; i++)
         {
             GameObject newItem = new GameObject(randomItems[i].ItemName);
@@ -48,11 +45,11 @@ public class InventoryManager : MonoBehaviour
         Vector2 NewPosition = new Vector2();
         NewPosition = pos;
         Vector2 OldPosition = new Vector2();
-        OldPosition = selected.ItemPosition;
+        OldPosition = selected.transform.localPosition;
         int selectedIdx = _items.IndexOf(selected);
         if (current != null)
         {
-            NewPosition = current.ItemPosition;
+            NewPosition = current.transform.localPosition;
             int currentIdx = _items.IndexOf(current);
             _items[currentIdx].SetNewPosition(OldPosition);
         }
@@ -62,10 +59,19 @@ public class InventoryManager : MonoBehaviour
 
     public void DeleteItem(Item item)
     {
-        if(_items.Contains(item))
+        if (_items.Contains(item))
         {
             Destroy(item.gameObject);
             _items.Remove(item);
         }
     }
+
+    public void PingItemLocation(Vector2 pos)
+    {
+        foreach (var item in _items)
+        {
+            item.PingPosition(pos);
+        }
+    }
+
 }

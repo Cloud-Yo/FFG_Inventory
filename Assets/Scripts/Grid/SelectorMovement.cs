@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class SelectorMovement : MonoBehaviour
 {
-    [SerializeField] private const float _moveAmount = 19f;
-    [SerializeField] private GridManager _inventoryGridManager;
-    [SerializeField] private SelectionManager _selectionManager;
+    [SerializeField] private float _moveAmount;
     private RectTransform _myRT = null;
     public Vector2 SelectorPosition {get { return (Vector2)this.transform.localPosition;} }
     private Vector2 _gridLimits;
@@ -14,15 +12,16 @@ public class SelectorMovement : MonoBehaviour
 
     void Start()
     {
+        _moveAmount = GridManager.Instance.Scale;
         _myRT = GetComponent<RectTransform>();
-        _gridLimits = new Vector2(_inventoryGridManager.Width * 0.5f, _inventoryGridManager.Height * 0.5f);
+        _gridLimits = new Vector2(GridManager.Instance.Width * 0.5f, GridManager.Instance.Height * 0.5f);
         _myRT.localPosition = new Vector2(-(_gridLimits.x), _gridLimits.y);
         OnMovedSelector();
     }
 
     private void OnMovedSelector()
     {
-        _selectionManager.CursorPosition = _myRT.localPosition;
+        SelectionManager.Instance.SelectorPosition = _myRT.localPosition;
     }
 
     public void MoveLeftRight(float x)

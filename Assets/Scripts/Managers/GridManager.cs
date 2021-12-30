@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoSingleton<GridManager>
 {
     [Header("Grid Size")]
     [SerializeField] private int _rows;
@@ -24,7 +24,7 @@ public class GridManager : MonoBehaviour
 
 
 
-    private void Awake()
+    private void OnEnable()
     {
         InitializeGrid();
     }

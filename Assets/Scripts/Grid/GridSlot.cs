@@ -10,10 +10,10 @@ public class GridSlot
 
     public GameObject InventoryItem { get; set; } = null;
 
-    public GridSlot(Vector2 pos, GameObject go = null)
+    public GridSlot(Vector2 pos)
     {
         _position = pos;
-        InventoryItem = go;
+
     }
 
 }

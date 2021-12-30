@@ -1,137 +1,92 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using TMPro;
+using UnityEngine.UI;
 
-public class SelectionManager : MonoBehaviour
+public class SelectionManager : MonoSingleton<SelectionManager>
 {
-    [Header("References")]
-    [SerializeField] private InventoryManager _inventoryManager = null;
-    [SerializeField] private MovableIcon _itemSelectedIcon = null;
+    [SerializeField] private SelectedIcon _selectedItemImage = null;
     [SerializeField] private ParticleSystem _cursorDeletePS = null;
-    [SerializeField] private UIManager _uiManager = null;
-    private AudioManager _audioManager = null;
-
-    private static Vector2 _cursorPosition;
-    private Item _currentItem = null;
-    private Item _selectedItem = null;
+    private Vector2 _selectorPosition;
+    public Vector2 SelectorPosition { get{return _selectorPosition;} set{_selectorPosition = value;}}
+    private Item _selectedItem;
+    private Item _currentItem;
+    public Item CurrentItem { get { return _currentItem; } set { _currentItem = value; } }
     private bool _selectionActive = false;
-    private void Start()
+
+    public void OnXPressed()
     {
-        _audioManager = GetComponent<AudioManager>();
-    }
-    public Vector2 CursorPosition
-    {
-        get { return _cursorPosition; }
-        set { _cursorPosition = value; OnCursorMoved(); }
+        _currentItem = null;
+        InventoryManager.Instance.PingItemLocation(_selectorPosition);
+        if (_currentItem != null)
+        {
+            if (!_selectionActive)
+            {
+                _selectedItem = _currentItem;
+                _selectionActive = true;
+                _selectedItem.gameObject.SetActive(false);
+                UIManager.Instance.SetSelectedSlot(true, _selectedItem.transform.localPosition);
+                UIManager.Instance.SetItemName(_currentItem.Name);
+                _selectedItemImage.ChangeImage(_selectedItem.ItemScriptableObject.Icon);
+                AudioManager.Instance.PlaySFX("selectedItem");
+            }
+            else
+            {
+                InventoryManager.Instance.SwapItemPosition(_selectedItem, _currentItem, _selectorPosition);
+                _selectedItem.gameObject.SetActive(true);
+                _selectedItemImage.DisableImage();
+                UIManager.Instance.SetSelectedSlot(false, Vector2.zero);
+                UIManager.Instance.SetItemName("");
+                _selectionActive = false;
+                AudioManager.Instance.PlaySFX("swapItems");
+            }
+            SelectorPosition = _selectorPosition;
+        }
+        else
+        {
+            if (_selectionActive)
+            {
+                InventoryManager.Instance.SwapItemPosition(_selectedItem, _currentItem, _selectorPosition);
+                _selectedItem.gameObject.SetActive(true);
+                _selectedItemImage.DisableImage();
+                UIManager.Instance.SetSelectedSlot(false, Vector2.zero);
+                UIManager.Instance.SetItemName("");
+                _selectionActive = false;
+                AudioManager.Instance.PlaySFX("swapItems");
+                SelectorPosition = _selectorPosition;
+            }
+            else
+            {
+                UIManager.Instance.SetItemName("Empty Slot");
+                AudioManager.Instance.PlaySFX("noSelection");
+            }
+
+        }
     }
 
     public void OnYPressed()
     {
-        if(_selectionActive)
+        if (_selectionActive)
         {
-            if(_selectedItem != null)
+            if (_selectedItem != null)
             {
-                _uiManager.SetItemName($"Removed Item");
-                _inventoryManager.DeleteItem(_selectedItem);
+                UIManager.Instance.SetItemName($"Removed Item");
+                InventoryManager.Instance.DeleteItem(_selectedItem);
                 _selectedItem = null;
                 _selectionActive = false;
-                _itemSelectedIcon.DisableImage();
-                _uiManager.SetSelectedSlot(false, Vector2.zero);
-                _audioManager.PlaySFX("delete");
+                _selectedItemImage.DisableImage();
+                UIManager.Instance.SetSelectedSlot(false, Vector2.zero);
+                AudioManager.Instance.PlaySFX("delete");
                 _cursorDeletePS.Emit(1);
 
             }
         }
         else
         {
-            _inventoryManager.SpawnRandomItems();
-            _audioManager.PlaySFX("randomItems");
-            _uiManager.SetItemName("A Fresh Start");
+            InventoryManager.Instance.SpawnRandomItems();
+            AudioManager.Instance.PlaySFX("randomItems");
+            UIManager.Instance.SetItemName("A Fresh Start");
+            SelectorPosition = _selectorPosition;
         }
-        //OnCursorMoved();
-    }
-    private void OnCursorMoved()
-    {
-        
-        
-        var selected = from item in _inventoryManager.Items
-                        where item.ItemPosition == _cursorPosition
-                        select item;
-        
-        _currentItem = selected.FirstOrDefault();
-        
-        if (!_selectionActive)
-        {
-            _uiManager.SetItemName("");
-        }
-
-
-
-    }
-
-    public void OnXPressed()
-    {
-        OnItemSelected();
-    }
-
-    private void OnItemSelected()
-    {
-        if(_currentItem != null)
-        {
-            if(!_selectionActive)
-            {
-                _selectedItem = _currentItem;
-                _selectionActive = true;
-                _selectedItem.gameObject.SetActive(false);
-                _uiManager.SetSelectedSlot(true, _selectedItem.ItemPosition);
-                _uiManager.SetItemName(_currentItem.Name);
-                _itemSelectedIcon.ChangeImage(SelectedItemSprite());
-                _audioManager.PlaySFX("selectedItem");
-            }
-            else
-            {
-                _inventoryManager.SwapItemPosition(_selectedItem, _currentItem, _cursorPosition);
-                _selectedItem.gameObject.SetActive(true);
-                _itemSelectedIcon.DisableImage();
-                _uiManager.SetSelectedSlot(false, Vector2.zero);
-                _uiManager.SetItemName("");
-                _selectionActive = false;
-                _audioManager.PlaySFX("swapItems");
-            }
-            OnCursorMoved();
-        }
-        else
-        {
-            if(_selectionActive)
-            {
-                _inventoryManager.SwapItemPosition(_selectedItem, _currentItem, _cursorPosition);
-                _selectedItem.gameObject.SetActive(true);
-                _itemSelectedIcon.DisableImage();
-                _uiManager.SetSelectedSlot(false, Vector2.zero);
-                _uiManager.SetItemName("");
-                _selectionActive = false;
-                _audioManager.PlaySFX("swapItems");
-                OnCursorMoved();
-            }
-            else
-            {
-                _uiManager.SetItemName("Empty Slot");
-                _audioManager.PlaySFX("noSelection");
-            }
-
-        }
-       
-    }
-
-    private Sprite SelectedItemSprite()
-    {
-        if(_selectionActive)
-        {
-            return _selectedItem.ItemScriptableObject.Icon;
-        }
-        return null;
     }
 }

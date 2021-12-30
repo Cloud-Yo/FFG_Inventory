@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class UIManager : MonoBehaviour
+public class UIManager : MonoSingleton<UIManager>
 {
     [SerializeField] private TMP_Text _itemNameText = null;
     [SerializeField] private Image _selectedSlotImage = null;
